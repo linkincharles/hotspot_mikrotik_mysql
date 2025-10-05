@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 18-Jun-2019 às 19:33
--- Versão do servidor: 5.7.26-0ubuntu0.18.04.1
--- versão do PHP: 7.2.19-0ubuntu0.18.04.1
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 05/10/2025 às 12:53
+-- Versão do servidor: 11.8.3-MariaDB-log
+-- Versão do PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `hotspot`
+-- Banco de dados: `u699539422_hotspott`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `dados`
+-- Estrutura para tabela `dados`
 --
 
 CREATE TABLE `dados` (
@@ -33,30 +32,42 @@ CREATE TABLE `dados` (
   `cpf` varchar(20) NOT NULL,
   `nome` varchar(40) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `empresa` varchar(40) NOT NULL,
+  `sobrenome` varchar(40) NOT NULL,
   `telefone` varchar(20) NOT NULL,
+  `link_orig` varchar(255) DEFAULT NULL,
   `link` varchar(50) NOT NULL,
   `mac` varchar(20) NOT NULL,
   `ip` varchar(20) NOT NULL,
-  `data` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `data` varchar(50) NOT NULL,
+  `data_cadastro` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
+-- Despejando dados para a tabela `dados`
 --
--- Índices para tabela `dados`
+
+INSERT INTO `dados` (`id`, `cpf`, `nome`, `email`, `sobrenome`, `telefone`, `link_orig`, `link`, `mac`, `ip`, `data`, `data_cadastro`) VALUES
+(127, '147.505.377-05', 'Charles', 'linkincharles@gmail.com', 'Leandro', '(21) 97692-6381', 'http://connectivitycheck.gstatic.com/generate_204', '', '7E:C4:F4:18:FF:8B', '10.5.50.3', '', '2025-10-05 09:44:14');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `dados`
 --
 ALTER TABLE `dados`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `dados`
 --
 ALTER TABLE `dados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,94 +1,117 @@
 <?php
-   $mac=$_POST['mac'];
-   $ip=$_POST['ip'];
-   $username=$_POST['username'];
-   $linklogin=$_POST['link-login'];
-   $linkorig=$_POST['link-orig'];
-   $error=$_POST['error'];
-   $chapid=$_POST['chap-id'];
-   $chapchallenge=$_POST['chap-challenge'];
-   $linkloginonly=$_POST['link-login-only'];
-   $linkorigesc=$_POST['link-orig-esc'];
-   $macesc=$_POST['mac-esc'];
-   include  "db.php";
-   include  "validacpf.php";
-   $valida = 0;
-   date_default_timezone_set('America/Sao_Paulo');
+// Habilita a exibição de erros para facilitar a depuração (remover ou comentar em produção)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Inclui os arquivos necessários
+include "db.php";
+include "validacpf.php";
+
+// Define o fuso horário
+date_default_timezone_set('America/Sao_Paulo');
+
+// VERIFICA SE A REQUISIÇÃO É DO TIPO POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // Pega as variáveis do Mikrotik Hotspot (se existirem)
+    $mac = isset($_POST['mac']) ? $_POST['mac'] : '';
+    $ip = isset($_POST['ip']) ? $_POST['ip'] : '';
+    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    $linklogin = isset($_POST['link-login']) ? $_POST['link-login'] : '';
+    $linkorig = isset($_POST['link-orig']) ? $_POST['link-orig'] : '';
+    $error = isset($_POST['error']) ? $_POST['error'] : '';
+    $chapid = isset($_POST['chap-id']) ? $_POST['chap-id'] : '';
+    $chapchallenge = isset($_POST['chap-challenge']) ? $_POST['chap-challenge'] : '';
+    $linkloginonly = isset($_POST['link-login-only']) ? $_POST['link-login-only'] : '';
+    $linkorigesc = isset($_POST['link-orig-esc']) ? $_POST['link-orig-esc'] : '';
+    $macesc = isset($_POST['mac-esc']) ? $_POST['mac-esc'] : '';
+
+    $valida = 0;
+    $erros = []; // Array para guardar as mensagens de erro
+
+    // Validações
+    if (empty($_POST['inputCpf']) || validaCPF($_POST['inputCpf']) == false) {
+        $erros[] = "CPF inválido.";
+        $valida++;
+    }
+    if (empty($_POST['inputNome']) || strlen($_POST['inputNome']) < 3) {
+        $erros[] = "Nome inválido.";
+        $valida++;
+    }
+    if (empty($_POST['inputEmail']) || filter_var($_POST['inputEmail'], FILTER_VALIDATE_EMAIL) == false) {
+        $erros[] = "Email inválido.";
+        $valida++;
+    }
+    if (empty($_POST['inputEmpresa']) || strlen($_POST['inputEmpresa']) < 3) {
+        $erros[] = "Empresa inválida.";
+        $valida++;
+    }
+    if (empty($_POST['inputTelefone']) || strlen($_POST['inputTelefone']) < 14) { // Assumindo formato com máscara (xx) xxxxx-xxxx
+        $erros[] = "Telefone inválido.";
+        $valida++;
+    }
+
+    // Se não houver erros de validação, insere no banco
+    if ($valida == 0) {
+        // Verifica se a conexão com o banco de dados foi bem-sucedida
+        if (isset($MySQLi) && $MySQLi->ping()) {
+            
+            // Usar prepared statements para segurança contra SQL Injection
+            $stmt = $MySQLi->prepare("INSERT INTO dados (cpf, nome, email, empresa, telefone, link_orig, mac, ip, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            
+            // Verifique se os nomes das colunas estão corretos na sua tabela 'dados'
+            $cpf = $_POST['inputCpf'];
+            $nome = $_POST['inputNome'];
+            $email = $_POST['inputEmail'];
+            $empresa = $_POST['inputEmpresa'];
+            $telefone = $_POST['inputTelefone'];
+            $data = date('Y-m-d H:i:s');
+            
+            $stmt->bind_param("sssssssss", $cpf, $nome, $email, $empresa, $telefone, $linkorig, $mac, $ip, $data);
+
+            if ($stmt->execute()) {
+                // Redireciona para a página de login do Hotspot
+                echo "<script> window.location.href = '" . $linkloginonly . "?dst=" . $linkorigesc . "&username=T-" . $macesc . "'; </script>";
+                exit(); // Encerra o script após o redirecionamento
+            } else {
+                echo "Erro ao inserir os dados: " . $stmt->error;
+            }
+            $stmt->close();
+
+        } else {
+            echo "Erro: Falha na conexão com o banco de dados. Verifique o arquivo db.php.";
+        }
+
+    } else {
+        // Se houver erros, exibe-os
+        echo "<h1>Por favor, corrija os seguintes erros:</h1>";
+        foreach ($erros as $erro) {
+            echo "<p style='color:red;'>- " . $erro . "</p>";
+        }
+    }
+    
+    // Fecha a conexão somente se ela foi aberta
+    if (isset($MySQLi)) {
+        $MySQLi->close();
+    }
+} else {
+    // Se a página for acessada via GET, você pode exibir uma mensagem ou o formulário HTML
+    // Como seu HTML está misturado, o ideal seria separá-lo.
+    // Por enquanto, podemos apenas exibir uma mensagem de que o formulário deve ser enviado.
+    // echo "Esta página deve ser acessada através do formulário de hotspot.";
+}
+
 ?>
-
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
+<html lang="pt-br">
+<head>
+    <meta charset="utf-t">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/signin.css" rel="stylesheet">
-
-
 </head>
-
 <body class="text-center">
-  <div class="container">
-<?php 
-
-if (validaCPF($_POST['inputCpf']) == false) {
-    echo "<p>CPF invalido</p>";
-    $valida++;
-}
-if (strlen($_POST['inputNome']) < 3) {
-    echo "<p>Nome invalido</p>";
-    $valida++;
-}
-
-if (ctype_alpha($_POST['inputNome']) == false) {
-   echo "<p>Nome invalido</p>";
-    $valida++;
-}
-
-
-if (filter_var($_POST['inputEmail'], FILTER_VALIDATE_EMAIL) == false) {
-    echo "<p>Email invalido</p>";
-    $valida++;
-}
-
-if (strlen($_POST['inputEmpresa']) < 3) {
-    echo "<p>Empresa invalida</p>";
-    $valida++;
-}
-
-if (ctype_alpha($_POST['inputEmpresa']) == false) {
-   echo "<p>Empresa invalida</p>";
-    $valida++;
-}
-
-if (strlen($_POST['inputTelefone']) < 14) {
-    echo "<p>Telefone invalido</p>";
-    $valida++;
-}
-
- if ($valida == 0) {
-		$dados = "'".$_POST['inputCpf']."','".$_POST['inputNome']."','".$_POST['inputEmail']."','".$_POST['inputEmpresa']."','".$_POST['inputTelefone']."','".$_POST['link-orig']."','".$_POST['mac']."','".$_POST['ip']."','".date(DATE_RFC822)."'\n"; 
-		$query = "INSERT INTO dados  VALUES (NULL, $dados);";
-		//$query = "INSERT INTO dados  VALUES (NULL,'cpf', 'nome', 'empresa', 'email', 'telefone', '', '64:1C:67:7D:3F:E2', '172.16.0.254', 'Mon, 17 Jun 19 17:09:24 +0000' );";
-		
-
-		if ($MySQLi->query($query) === TRUE) {
-			  echo "<script> window.location.href = '".$linkloginonly."?dst=".$linkorigesc."&username=T-".$macesc."';   </script>";
-		  // echo "<script> window.location.href = 'http://wifi.meta/login?dst=www.metadistribuicao.com.br&username=T-".$macesc."';</script>";
-        } else {
-		    echo "Error: " . $query . "<br>" . $MySQLi->error ;
-		    
-		}
-
-}
- 
-$MySQLi->close();
-
-?>
-</div>
+    <div class="container">
+        </div>
 </body>
 </html>
-
