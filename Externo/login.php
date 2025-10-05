@@ -43,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros[] = "Email inválido.";
         $valida++;
     }
-    if (empty($_POST['inputEmpresa']) || strlen($_POST['inputEmpresa']) < 3) {
-        $erros[] = "Empresa inválida.";
+    if (empty($_POST['inputSobrenome']) || strlen($_POST['inputSobrenome']) < 3) {
+        $erros[] = "Sobrenome inválida.";
         $valida++;
     }
     if (empty($_POST['inputTelefone']) || strlen($_POST['inputTelefone']) < 14) { // Assumindo formato com máscara (xx) xxxxx-xxxx
@@ -58,17 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($MySQLi) && $MySQLi->ping()) {
             
             // Usar prepared statements para segurança contra SQL Injection
-            $stmt = $MySQLi->prepare("INSERT INTO dados (cpf, nome, email, empresa, telefone, link_orig, mac, ip, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $MySQLi->prepare("INSERT INTO dados (cpf, nome, email, sobrenome, telefone, link_orig, mac, ip, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             // Verifique se os nomes das colunas estão corretos na sua tabela 'dados'
             $cpf = $_POST['inputCpf'];
             $nome = $_POST['inputNome'];
             $email = $_POST['inputEmail'];
-            $empresa = $_POST['inputEmpresa'];
+            $sobrenome = $_POST['inputSobrenome'];
             $telefone = $_POST['inputTelefone'];
             $data = date('Y-m-d H:i:s');
             
-            $stmt->bind_param("sssssssss", $cpf, $nome, $email, $empresa, $telefone, $linkorig, $mac, $ip, $data);
+            $stmt->bind_param("sssssssss", $cpf, $nome, $email, $sobrenome, $telefone, $linkorig, $mac, $ip, $data);
 
             if ($stmt->execute()) {
                 // Redireciona para a página de login do Hotspot
