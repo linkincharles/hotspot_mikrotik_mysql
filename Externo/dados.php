@@ -43,8 +43,8 @@
                     <th>#</th>
                     <th>CPF</th>
                     <th>Nome</th>
+                    <th>Sobrenome</th>
                     <th>Email</th>
-                    <th>Empresa</th>
                     <th>Telefone</th>
                     <th>Site Acessado</th>
                     <th>MAC</th>
@@ -63,8 +63,8 @@
                     echo "<td>" . htmlspecialchars($fetch['id']) . "</td>";
                     echo "<td>" . htmlspecialchars($fetch['cpf']) . "</td>";
                     echo "<td>" . htmlspecialchars($fetch['nome']) . "</td>";
+                    echo "<td>" . htmlspecialchars($fetch['sobrenome']) . "</td>";
                     echo "<td>" . htmlspecialchars($fetch['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($fetch['empresa']) . "</td>";
                     echo "<td>" . htmlspecialchars($fetch['telefone']) . "</td>";
                     // CÓDIGO EDITADO: Adicionada a classe 'truncate' para cortar o link
                     echo "<td class='truncate' title='" . htmlspecialchars($fetch['link_orig']) . "'>" . htmlspecialchars($fetch['link_orig']) . "</td>";
