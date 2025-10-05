@@ -1,139 +1,114 @@
 <!doctype html>
-<html lang="en">
-  <head>
+<html lang="pt-br">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-   
-    <title>Login</title>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-  </head>
-<body>
-
-
-
- <body class="text-center">
-    <div class="content">
-    <form id="form" method="post" action="https://site.com.br/hotspot/login.php" >
-          <!--
-      <form id="form" method="post" action="http://127.0.0.1/hotspotwifi/login.php" class="form-signin"> 
-      -->
-      <div>
-      <img class="mb-4" src="logo-cor.png" alt="" width="" height="150">
-      <h1 class="h3 mb-3 font-weight-normal">Favor realizar o cadastro</h1>
-      </div>
-      <div>
-      <label for="inputCpf" class="sr-only">CPF</label>
-      <input name="inputCpf" type="text" id="inputCpf" class="form-control" placeholder="CPF"  required autofocus>
-      </div>
-      <div>
-      <label for="inputNome" class="sr-only">Nome</label>
-      <input name="inputNome" type="text" id="inputNome" class="form-control" placeholder="Nome" required autofocus>
-      </div>
-      <div>
-      <label for="inputEmpresa" class="sr-only">Sobrenome</label>
-      <input name="inputEmpresa" type="text" id="inputEmpresa" class="form-control" placeholder="Sobrenome" required>
-      </div>
-      <div>
-      <label for="inputTelefone" class="sr-only">Telefone</label>
-      <input name="inputTelefone" type="text" id="inputTelefone" class="form-control" placeholder="Telefone" required>
-      </div>
-      <div>
-      <label for="inputEmail" class="sr-only">Email</label>
-      <input name="inputEmail" type="email" id="inputEmail" class="form-control" placeholder="E-mail" required >
-      </div>
+    <meta name="description" content="Página de Login Hotspot">
+    <meta name="author" content="RedesLinkin">
     
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
-         
+    <title>Login Hotspot</title>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+</head>
 
-
-      <p class=""><a href="#" onclick="myFunction()">Login</a> </p>
-      
-      <input type="hidden" name="mac" value="$(mac)">
-      <input type="hidden" name="mac-esc" value="$(mac-esc)">
-      <input type="hidden" name="ip" value="$(ip)">
-      <input type="hidden" name="username" value="$(username)">
-      <input type="hidden" name="link-login" value="$(link-login)">
-      <input type="hidden" name="link-orig" value="$(link-orig)">
-      <input type="hidden" name="link-login-only" value="$(link-login-only)">
-      <input type="hidden" name="error" value="$(error)">
-    </form>
-<div id="divlogin" style="display: none;">
-
-    <form id="loginForm" role="form" action="$(link-login-only)" method="post">
-
-        <input type="hidden" name="dst" value="$(link-orig)">
-        <input type="hidden" name="popup" value="true">
-        <h1 class="h3 mb-3 font-weight-normal">Favor realizar o Login</h1>
-
-        <input type="text" class="form-control input-lg" id="inputLogin" name="username" placeholder="Usuario" autofocus="" required="">
-        <input type="password" class="form-control input-lg" id="inputPassword" name="password" placeholder="Senha" required="">
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Acessar</button>
-
-           <div>
-                $(if error)
-                    <div class="alert alert-danger">$(error)</div>
-                $(endif)
-
-                <div class="alert alert-info">Não esta logado.</div>
-
-                $(if trial == 'yes')
-                  <div>
-                  <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" style="color: #f5f5f5;"> clique aqui </a>
-                  </div>
-                $(endif)
+<body class="text-center">
+    
+    <div class="content">
+        <form id="form" method="post" action="https://hotspot.redeslinkin.com.br/login.php">
+            <div>
+                <img class="mb-4" src="logo-cor.png" alt="Logo da Empresa" height="150">
+                <h1 class="h3 mb-3 font-weight-normal">Favor realizar o cadastro</h1>
             </div>
+            
+            <div class="form-group">
+                <input name="inputCpf" type="text" id="inputCpf" class="form-control" placeholder="CPF" required autofocus>
+            </div>
+            <div class="form-group">
+                <input name="inputNome" type="text" id="inputNome" class="form-control" placeholder="Nome Completo" required>
+            </div>
+            <div class="form-group">
+                <input name="inputSobrenome" type="text" id="inputSobrenome" class="form-control" placeholder="Sobrenome" required>
+            </div>
+            <div class="form-group">
+                <input name="inputTelefone" type="text" id="inputTelefone" class="form-control" placeholder="Celular com DDD" required>
+            </div>
+            <div class="form-group">
+                <input name="inputEmail" type="email" id="inputEmail" class="form-control" placeholder="E-mail" required>
+            </div>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar Internet</button>
+            
+            <p class="mt-3"><a href="#" onclick="toggleLoginForm()">Já tem cadastro? Faça o login</a></p>
+            
+            <input type="hidden" name="mac" value="$(mac)">
+            <input type="hidden" name="mac-esc" value="$(mac-esc)">
+            <input type="hidden" name="ip" value="$(ip)">
+            <input type="hidden" name="username" value="$(username)">
+            <input type="hidden" name="link-login" value="$(link-login)">
+            <input type="hidden" name="link-orig" value="$(link-orig)">
+            <input type="hidden" name="link-login-only" value="$(link-login-only)">
+            <input type="hidden" name="error" value="$(error)">
+        </form>
 
-            <script type="text/javascript" src="js/jquery.min.js"></script>
-            <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <div id="divlogin" style="display: none;">
+            <form id="loginForm" role="form" action="$(link-login-only)" method="post">
+                <input type="hidden" name="dst" value="$(link-orig)">
+                <input type="hidden" name="popup" value="true">
+                
+                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+                
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg" name="username" placeholder="Usuário" required autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control input-lg" id="inputPassword" name="password" placeholder="Senha" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar</button>
 
-            $(if chap-id)
-            <script type="text/javascript" src="js/md5.js"></script>
-            <script type="text/javascript">
-            $('#loginForm').submit(function () {
+                $(if error)
+                    <div class="alert alert-danger mt-3">$(error)</div>
+                $(endif)
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-validate.js"></script>
+
+    $(if chap-id)
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript">
+        // CORREÇÃO: Usando o $ padrão do jQuery, que já foi carregado.
+        $('#loginForm').submit(function () {
             var password = $('#inputPassword');
             password.val(hexMD5('$(chap-id)' + password.val() + '$(chap-challenge)'));
-            });
-            </script>
-            $(endif)
-            </form>
+        });
+    </script>
+    $(endif)
 
-  </div>
-</div>
+    <script type="text/javascript">
+        // CORREÇÃO: Usando o $ padrão do jQuery, sem necessidade de noConflict()
+        $(document).ready(function(){
+            // CORREÇÃO: Máscara atualizada para aceitar celulares com 9 dígitos.
+            $('#inputCpf').mask('000.000.000-00');
+            $('#inputTelefone').mask('(00) 00000-0000');
+        });
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.mask.min.js"></script>
-<script src="js/bootstrap-validate.js"></script>    
-<script type="text/javascript">
-var $m = jQuery.noConflict()
-  $m(document).ready(function(){
-  $m("#inputCpf").mask("999.999.999-99");
-  $m("#inputTelefone").mask("(99) 99999-9999");
-});
-</script>  
-<script type="text/javascript">
-  function myFunction() {
-  var x = document.getElementById("divlogin");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-  }
-</script>
+        function toggleLoginForm() {
+            $('#form').toggle(); // Esconde/mostra o formulário de cadastro
+            $('#divlogin').toggle(); // Esconde/mostra o formulário de login
+        }
 
-<script>
-  // Basic Example
-   bootstrapValidate(['#inputCpf','#inputTelefone'], 'min:14:Minimo 14 character!');
-   bootstrapValidate(['#inputEmpresa','#inputNome'], 'min:3:Minimo 3 character!|max:40:Maximo 40 characters!|alpha:Deve conter apenas letras');
-   bootstrapValidate('#inputEmail', 'email:Entre com um email valido!')
-</script>
+        // Validações com bootstrap-validate
+        bootstrapValidate('#inputCpf', 'min:14:O CPF deve estar completo!');
+        bootstrapValidate('#inputTelefone', 'min:15:O celular deve estar completo!');
+        bootstrapValidate(['#inputSobrenome','#inputNome'], 'min:3:Mínimo de 3 caracteres|alpha:Deve conter apenas letras');
+        bootstrapValidate('#inputEmail', 'email:Digite um e-mail válido!');
+    </script>
 
 </body>
 </html>
