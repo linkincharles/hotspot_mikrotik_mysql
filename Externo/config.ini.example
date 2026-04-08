@@ -1,17 +1,12 @@
-; ============================================
-; Configuração do Hotspot
-; Exemplo de configuração - Copie para config.ini e preencha
-; ============================================
-
 [database]
-db_host = "localhost"
+db_host = "127.0.0.1"
 db_port = "3306"
-db_user = "seu_usuario"
-db_pass = "sua_senha"
+db_user = "seu_usuario_banco"
+db_pass = "sua_senha_banco"
 db_name = "nome_do_banco"
 
 [hotspot]
-hotspot_name = "WiFi GRÁTIS"
+hotspot_name = "Wifi GRÁTIS"
 hotspot_logo = "logo.png"
 hotspot_bg_image = "bg.jpg"
 hotspot_primary_color = "#667eea"
@@ -20,8 +15,22 @@ external_login_url = "https://seu-dominio.com.br/login.php"
 mikrotik_ip = "192.168.1.1"
 mikrotik_api_port = "8728"
 mikrotik_api_user = "admin"
-mikrotik_api_pass = "sua_senha"
+mikrotik_api_pass = "sua_senha_mikrotik"
 
 [admin]
 admin_user = "admin"
-admin_pass = ""
+admin_pass = "$2y$10$..."
+
+[whatsapp]
+evolution_api_url = "https://api.seu-dominio.com.br"
+evolution_instance_name = "sua_instancia"
+evolution_api_key = "SUA_API_KEY"
+evolution_notify_enabled = "true"
+evolution_notify_type = "text"
+evolution_notify_template = "Novo cadastro: {nome} ({cpf}) - Email: {email}"
+evolution_notify_numbers = "5511999999999"
+evolution_notify_media_url = ""
+evolution_client_enabled = "true"
+evolution_client_type = "text"
+evolution_client_template = "Olá {nome}! Bem-vindo ao nosso WiFi. Seu login: {cpf}"
+evolution_client_media_url = ""
