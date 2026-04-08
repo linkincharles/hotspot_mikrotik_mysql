@@ -1,26 +1,26 @@
 ; ============================================
-; ConfiguraÁ„o do Hotspot
-; Gerado em: 05/04/2026 20:30:40
+; Configura√ß√£o do Hotspot
+; Exemplo de configura√ß√£o - Copie para config.ini e preencha
 ; ============================================
 
 [database]
-db_host = "127.0.0.1"
+db_host = "localhost"
 db_port = "3306"
-db_user = "u699539422_hotspott"
-db_pass = ""
-db_name = "u699539422_hotspott"
+db_user = "seu_usuario"
+db_pass = "sua_senha"
+db_name = "nome_do_banco"
 
 [hotspot]
-hotspot_name = "Wifi GR¡TIS"
+hotspot_name = "WiFi GR√ÅTIS"
 hotspot_logo = "logo.png"
 hotspot_bg_image = "bg.jpg"
 hotspot_primary_color = "#667eea"
 hotspot_secondary_color = "#764ba2"
-external_login_url = "https://hotspot.redeslinkin.com.br/login.php"
-mikrotik_ip = "177.54.22.229"
+external_login_url = "https://seu-dominio.com.br/login.php"
+mikrotik_ip = "192.168.1.1"
 mikrotik_api_port = "8728"
 mikrotik_api_user = "admin"
-mikrotik_api_pass = 0n#2021#
+mikrotik_api_pass = "sua_senha"
 
 [admin]
 admin_user = "admin"
