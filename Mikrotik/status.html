@@ -1,79 +1,233 @@
 <!doctype html>
-<html lang="en">
-  <head>
+<html lang="pt-BR">
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-   
-    <title>Status WIFI</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/signin.css" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <title>Status da Conexão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #10b981;
+            --text-dark: #1a1a2e;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --white: #ffffff;
+        }
 
-</script>  
-  </head>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<body class="text-center">
-<div id="wrap">
-    
-    
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    <div class="container">
+        .status-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            max-width: 450px;
+            width: 100%;
+            overflow: hidden;
+        }
 
-        <div class="row">
-            $(if error)
-                <div class="alert alert-danger">$(error)</div>
-            $(endif)
+        .status-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
 
-            $(if login-by == 'trial')
-                <div class="alert alert-info">Acesso realizado 30 mini!</div>
-            $(elif login-by != 'mac')
-                <div class="alert alert-info">Bem Vindo $(username)!</div>
-            $(endif)
+        .status-header .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .status-header .icon-circle i { font-size: 28px; }
+
+        .status-header h2 { font-size: 20px; font-weight: 700; }
+        .status-header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+        .alert {
+            margin: 15px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+        .alert-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .status-body { padding: 20px; }
+
+        .info-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .info-item .label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .info-item .label i {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .info-item .value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        .status-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn:hover { transform: translateY(-1px); }
+
+        @media (max-width: 480px) {
+            .status-card { border-radius: 16px; }
+            .info-item { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-card">
+        <div class="status-header">
+            <div class="icon-circle">
+                <i class="fas fa-wifi"></i>
+            </div>
+            <h2>Conectado</h2>
+            <p>Sua conexão está ativa</p>
         </div>
 
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
+        $(if error)
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle"></i>
+            $(error)
+        </div>
+        $(endif)
 
-                    <table class="table table-striped">
-                        <tbody>
-                        <tr>
-                            <td>Endereço IP:</td>
-                            <td>$(ip)</td>
-                        </tr>
-                        <tr>
-                            <td>bytes enviado/baixado</td>
-                            <td>$(bytes-in-nice) / $(bytes-out-nice)</td>
-                        </tr>
-                        $(if session-time-left)
-                        <tr>
-                            <td>Tempo conectado / restante:</td>
-                            <td>$(uptime) / $(session-time-left)</td>
-                        </tr>
-                        $(else)
-                        <tr>
-                            <td>Tempo conectado:</td>
-                            <td>$(uptime)</td>
-                        </tr>
-                        $(endif)
-                        $(if refresh-timeout)
-                        <tr>
-                            <td>Atualização de status</td>
-                            <td>$(refresh-timeout)</td>
-                            $(endif)
-                        </tbody>
-                    </table>
+        $(if login-by == 'trial')
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            Acesso de teste - 30 minutos
+        </div>
+        $(elif login-by != 'mac')
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            Bem-vindo, <strong>$(username)</strong>!
+        </div>
+        $(endif)
+
+        <div class="status-body">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label"><i class="fas fa-network-wired"></i> Endereço IP</div>
+                    <div class="value">$(ip)</div>
                 </div>
+                <div class="info-item">
+                    <div class="label"><i class="fas fa-download"></i> Download / Upload</div>
+                    <div class="value">$(bytes-in-nice) / $(bytes-out-nice)</div>
+                </div>
+                <div class="info-item">
+                    <div class="label"><i class="fas fa-clock"></i> Tempo conectado</div>
+                    <div class="value">$(uptime)</div>
+                </div>
+                $(if session-time-left)
+                <div class="info-item">
+                    <div class="label"><i class="fas fa-hourglass-half"></i> Tempo restante</div>
+                    <div class="value">$(session-time-left)</div>
+                </div>
+                $(endif)
+                $(if refresh-timeout)
+                <div class="info-item">
+                    <div class="label"><i class="fas fa-sync"></i> Atualização</div>
+                    <div class="value">$(refresh-timeout)</div>
+                </div>
+                $(endif)
             </div>
+        </div>
+
+        <div class="status-footer">
+            <a href="$(link-status)" class="btn btn-outline"><i class="fas fa-sync"></i> Atualizar</a>
+            <a href="$(link-logout)" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Desconectar</a>
         </div>
     </div>
 
-</div>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
+    $(if refresh-timeout)
+    <meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+    $(endif)
 </body>
 </html>

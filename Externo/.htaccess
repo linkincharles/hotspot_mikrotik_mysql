@@ -1,0 +1,4 @@
+<FilesMatch "\.(ini|env|log|sql|md|gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

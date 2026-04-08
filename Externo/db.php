@@ -1,11 +1,14 @@
 <?php
-$MySQLi = new MySQLi("127.0.0.1", "root", "123456", "hotspot");
+/**
+ * Conexão com banco de dados (compatibilidade com código legado)
+ * Usa o sistema de configuração centralizado
+ */
 
+define('HOTSPOT_ACCESS', true);
+require_once __DIR__ . '/config.php';
 
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
+$MySQLi = getDbConnection();
+
+if (!$MySQLi) {
+    error_log("Falha na conexão com o banco de dados.");
 }
-
-?>

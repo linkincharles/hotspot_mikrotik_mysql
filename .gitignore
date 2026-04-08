@@ -1,0 +1,22 @@
+# Arquivos de configuração com credenciais
+config.ini
+
+# SQL dumps (podem conter dados reais)
+*_dump.sql
+dados.sql
+*.sql.bak
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup
+*.bak
+*.old

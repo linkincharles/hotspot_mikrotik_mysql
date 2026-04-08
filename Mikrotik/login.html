@@ -1,76 +1,678 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Página de Login Hotspot">
-    <meta name="author" content="RedesLinkin">
-    
-    <title>Login Hotspot</title>
-    
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/signin.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Conecte-se ao WiFi - Acesso rápido e seguro">
+    <meta name="theme-color" content="#667eea">
+    <title>Conecte-se ao WiFi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --primary-dark: #5a6fd6;
+            --text-dark: #1a1a2e;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --white: #ffffff;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Lado esquerdo - Imagem/Branding */
+        .brand-side {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-side::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 30px;
+            object-fit: contain;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .brand-icon {
+            width: 180px;
+            height: 180px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .brand-icon i {
+            font-size: 80px;
+            opacity: 0.9;
+        }
+
+        .brand-content h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-content p {
+            font-size: 16px;
+            opacity: 0.85;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+
+        .features {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .feature-item i {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Lado direito - Formulário */
+        .form-side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: var(--white);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            border: none;
+            background: transparent;
+        }
+
+        .tab.active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Forms */
+        .form-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 14px 14px 44px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-wrapper input:focus + i,
+        .input-wrapper input:focus ~ i {
+            color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .lgpd-consent {
+            background: #f9fafb;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        .lgpd-consent label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .lgpd-consent input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+
+        .lgpd-consent a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .lgpd-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lgpd-modal.active {
+            display: flex;
+        }
+
+        .lgpd-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 20px;
+        }
+
+        .lgpd-modal h3 {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .lgpd-modal p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .lgpd-modal button {
+            margin-top: 15px;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mobile logo (aparece apenas em telas pequenas) */
+        .mobile-logo {
+            display: none;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .mobile-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            object-fit: contain;
+        }
+
+        .mobile-logo .icon-fallback {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .mobile-logo .icon-fallback i {
+            font-size: 36px;
+            color: white;
+        }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+
+            .brand-side {
+                display: none;
+            }
+
+            .form-side {
+                padding: 30px 20px;
+                min-height: 100vh;
+            }
+
+            .mobile-logo {
+                display: block;
+            }
+
+            .form-container {
+                max-width: 100%;
+            }
+
+            .form-header h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-side {
+                padding: 20px 15px;
+            }
+
+            .input-wrapper input {
+                padding: 12px 12px 12px 40px;
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 14px;
+            }
+        }
+
+        /* Loading state */
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
-<body class="text-center">
-    
-    <div class="content">
-        <form id="form" method="post" action="https://hotspot.redeslinkin.com.br/login.php">
-            <div>
-                <img class="mb-4" src="logo-cor.png" alt="Logo da Empresa" height="150">
-                <h1 class="h3 mb-3 font-weight-normal">Favor realizar o cadastro</h1>
+<body>
+    <!-- Lado Esquerdo - Branding -->
+    <div class="brand-side">
+        <div class="brand-content">
+            <div class="brand-icon">
+                <i class="fas fa-wifi"></i>
             </div>
+            <h1>Charles WiFi</h1>
+            <p>Conecte-se à internet de forma rápida, segura e gratuita.</p>
             
-            <div class="form-group">
-                <input name="inputCpf" type="text" id="inputCpf" class="form-control" placeholder="CPF" required autofocus>
-            </div>
-            <div class="form-group">
-                <input name="inputNome" type="text" id="inputNome" class="form-control" placeholder="Nome Completo" required>
-            </div>
-            <div class="form-group">
-                <input name="inputSobrenome" type="text" id="inputSobrenome" class="form-control" placeholder="Sobrenome" required>
-            </div>
-            <div class="form-group">
-                <input name="inputTelefone" type="text" id="inputTelefone" class="form-control" placeholder="Celular com DDD" required>
-            </div>
-            <div class="form-group">
-                <input name="inputEmail" type="email" id="inputEmail" class="form-control" placeholder="E-mail" required>
-            </div>
-            
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar Internet</button>
-            
-            <p class="mt-3"><a href="#" onclick="toggleLoginForm()">Já tem cadastro? Faça o login</a></p>
-            
-            <input type="hidden" name="mac" value="$(mac)">
-            <input type="hidden" name="mac-esc" value="$(mac-esc)">
-            <input type="hidden" name="ip" value="$(ip)">
-            <input type="hidden" name="username" value="$(username)">
-            <input type="hidden" name="link-login" value="$(link-login)">
-            <input type="hidden" name="link-orig" value="$(link-orig)">
-            <input type="hidden" name="link-login-only" value="$(link-login-only)">
-            <input type="hidden" name="error" value="$(error)">
-        </form>
-
-        <div id="divlogin" style="display: none;">
-            <form id="loginForm" role="form" action="$(link-login-only)" method="post">
-                <input type="hidden" name="dst" value="$(link-orig)">
-                <input type="hidden" name="popup" value="true">
-                
-                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-                
-                <div class="form-group">
-                    <input type="text" class="form-control input-lg" name="username" placeholder="Usuário" required autofocus>
+            <div class="features">
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Conexão de alta velocidade</span>
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control input-lg" id="inputPassword" name="password" placeholder="Senha" required>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Rede segura e protegida</span>
                 </div>
-                
-                <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar</button>
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Acesso ilimitado</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                $(if error)
-                    <div class="alert alert-danger mt-3">$(error)</div>
-                $(endif)
-            </form>
+    <!-- Lado Direito - Formulário -->
+    <div class="form-side">
+        <div class="form-container">
+            <!-- Logo Mobile -->
+            <div class="mobile-logo">
+                <div class="icon-fallback">
+                    <i class="fas fa-wifi"></i>
+                </div>
+            </div>
+
+            <div class="form-header">
+                <h2>Bem-vindo!</h2>
+                <p>Conecte-se à nossa rede WiFi</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('register')">
+                    <i class="fas fa-user-plus"></i> Cadastro
+                </button>
+                <button class="tab" onclick="switchTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+
+            <!-- Painel de Cadastro -->
+            <div id="registerPanel" class="form-panel active">
+                <form id="form" method="post" action="https://redeslinkin.com.br/hotspot/login.php">
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <div class="input-wrapper">
+                            <input name="inputCpf" type="text" id="inputCpf" placeholder="000.000.000-00" required autofocus>
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <div class="input-wrapper">
+                            <input name="inputNome" type="text" id="inputNome" placeholder="Seu nome" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sobrenome</label>
+                        <div class="input-wrapper">
+                            <input name="inputSobrenome" type="text" id="inputSobrenome" placeholder="Seu sobrenome" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <div class="input-wrapper">
+                            <input name="inputTelefone" type="tel" id="inputTelefone" placeholder="(00) 00000-0000" required>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <div class="input-wrapper">
+                            <input name="inputEmail" type="email" id="inputEmail" placeholder="seu@email.com" required>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+
+                    <div class="lgpd-consent">
+                        <label>
+                            <input type="checkbox" id="lgpdConsent" name="lgpd_consent" required>
+                            <span>Autorizo o uso dos meus dados para autenticação. Estou de acordo com a <a href="#" onclick="showLgpd(); return false;">Política de Privacidade</a>.</span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-wifi"></i>
+                        Acessar Internet
+                    </button>
+
+                    <input type="hidden" name="mac" value="$(mac)">
+                    <input type="hidden" name="mac-esc" value="$(mac-esc)">
+                    <input type="hidden" name="ip" value="$(ip)">
+                    <input type="hidden" name="username" value="$(username)">
+                    <input type="hidden" name="link-login" value="$(link-login)">
+                    <input type="hidden" name="link-orig" value="$(link-orig)">
+                    <input type="hidden" name="link-login-only" value="$(link-login-only)">
+                    <input type="hidden" name="error" value="$(error)">
+                </form>
+            </div>
+
+            <!-- Painel de Login -->
+            <div id="loginPanel" class="form-panel">
+                <form id="loginForm" role="form" action="https://redeslinkin.com.br/hotspot/check_login.php" method="post">
+                    <input type="hidden" name="mikrotik_login_url" value="$(link-login-only)">
+                    <input type="hidden" name="dst" value="$(link-orig)">
+                    <input type="hidden" name="mac" value="$(mac)">
+                    <input type="hidden" name="ip" value="$(ip)">
+                    <input type="hidden" name="lgpd_consent" value="on">
+
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="cpf" id="loginCpf" placeholder="000.000.000-00" required autofocus>
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                    </div>
+
+                    <div class="lgpd-consent">
+                        <label>
+                            <input type="checkbox" id="lgpdConsentLogin" name="lgpd_consent" required>
+                            <span>Autorizo o uso dos meus dados. Estou de acordo com a <a href="#" onclick="showLgpd(); return false;">Política de Privacidade</a>.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Acessar Internet
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <div class="form-footer">
+                    Ainda não tem conta? <a href="#" onclick="switchTab('register'); return false;">Cadastre-se grátis</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -82,7 +684,6 @@
     $(if chap-id)
     <script type="text/javascript" src="js/md5.js"></script>
     <script type="text/javascript">
-        // CORREÇÃO: Usando o $ padrão do jQuery, que já foi carregado.
         $('#loginForm').submit(function () {
             var password = $('#inputPassword');
             password.val(hexMD5('$(chap-id)' + password.val() + '$(chap-challenge)'));
@@ -91,24 +692,71 @@
     $(endif)
 
     <script type="text/javascript">
-        // CORREÇÃO: Usando o $ padrão do jQuery, sem necessidade de noConflict()
         $(document).ready(function(){
-            // CORREÇÃO: Máscara atualizada para aceitar celulares com 9 dígitos.
             $('#inputCpf').mask('000.000.000-00');
             $('#inputTelefone').mask('(00) 00000-0000');
+
+            bootstrapValidate('#inputCpf', 'min:14:O CPF deve estar completo!');
+            bootstrapValidate('#inputTelefone', 'min:15:O celular deve estar completo!');
+            bootstrapValidate(['#inputSobrenome','#inputNome'], 'min:3:Mínimo de 3 caracteres|alpha:Deve conter apenas letras');
+            bootstrapValidate('#inputEmail', 'email:Digite um e-mail válido!');
         });
 
-        function toggleLoginForm() {
-            $('#form').toggle(); // Esconde/mostra o formulário de cadastro
-            $('#divlogin').toggle(); // Esconde/mostra o formulário de login
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+
+            if (tab === 'register') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('registerPanel').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('loginPanel').classList.add('active');
+            }
         }
 
-        // Validações com bootstrap-validate
-        bootstrapValidate('#inputCpf', 'min:14:O CPF deve estar completo!');
-        bootstrapValidate('#inputTelefone', 'min:15:O celular deve estar completo!');
-        bootstrapValidate(['#inputSobrenome','#inputNome'], 'min:3:Mínimo de 3 caracteres|alpha:Deve conter apenas letras');
-        bootstrapValidate('#inputEmail', 'email:Digite um e-mail válido!');
+        function showLgpd() {
+            document.getElementById('lgpdModal').classList.add('active');
+        }
+
+        function closeLgpd() {
+            document.getElementById('lgpdModal').classList.remove('active');
+        }
+
+        // Validação do checkbox cadastro
+        document.getElementById('form').addEventListener('submit', function(e) {
+            var consent = document.getElementById('lgpdConsent');
+            if (!consent.checked) {
+                e.preventDefault();
+                alert('Você precisa aceitar a Política de Privacidade para continuar.');
+                consent.focus();
+            }
+        });
+
+        // Validação do checkbox login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            var consent = document.getElementById('lgpdConsentLogin');
+            if (!consent.checked) {
+                e.preventDefault();
+                alert('Você precisa aceitar a Política de Privacidade para continuar.');
+                consent.focus();
+            }
+        });
     </script>
 
+    <!-- Modal LGPD -->
+    <div id="lgpdModal" class="lgpd-modal">
+        <div class="lgpd-modal-content">
+            <h3><i class="fas fa-shield-alt"></i> Política de Privacidade</h3>
+            <p><strong>LGPD - Lei Geral de Proteção de Dados</strong></p>
+            <p>Os dados fornecidos (CPF, nome, telefone, e-mail) são utilizados exclusivamente para:</p>
+            <p>• Controle de acesso à internet via Hotspot<br>
+            • Autenticação do usuário<br>
+            • Registro de conexões (conforme Lei 12.965/2014)</p>
+            <p>Seus dados <strong>não</strong> são compartilhados com terceiros.</p>
+            <p>Você pode solicitar a exclusão dos seus dados a qualquer momento.</p>
+            <button class="btn btn-primary" onclick="closeLgpd()">Entendi</button>
+        </div>
+    </div>
 </body>
 </html>
